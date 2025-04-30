@@ -1,0 +1,13 @@
+src:https://www.numberanalytics.com/blog/essential-descriptive-statistics-metrics
+Βασικά συγκεντρωτικά στατιστικά μεγέθη : mean, median, mode, range, and variance
+min, max, average, deviation, average, correlation
+
+Dataset Trimming:
+Remove:
+Flow Id, Src/Dst Ip, Src/Dest Port, Protocol, Timestamp
+Fwd/Bwd Packets ?? Active Idle Times??
+
+
+B. Feature Selection Phase
+
+During this phase, features in the feature vector whose values remains constant throughout the dataset are identified. These features do not have any effect on the classification task. Therefore, these features are excluded from the dataset.
