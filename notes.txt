@@ -11,3 +11,71 @@ Fwd/Bwd Packets ?? Active Idle Times??
 B. Feature Selection Phase
 
 During this phase, features in the feature vector whose values remains constant throughout the dataset are identified. These features do not have any effect on the classification task. Therefore, these features are excluded from the dataset.
+
+
+exclude cause of std < 1e-3:
+Fwd Bytes/Bulk Avg: 0.0
+Fwd Packet/Bulk Avg: 0.0
+Fwd Bulk Rate Avg: 0.0
+
+
+
+Min , Max , Avg = Mean , Std
+Μείωση στηλών και αποφυγή outliers πιο γρήγορα στο αποτέλεσμα
+
+
+
+
+ Dataset 1: Δειγματοληψία
+ =========================
+ from sklearn.model_selection import train_test_split
+
+# df: το DataFrame σου
+# 'label': η στήλη με τις κατηγορίες (αντικατέστησέ την με τη δική σου)
+
+sampled_df = train_test_split(df, test_size=0.1, stratify=df['label'], random_state=42)[1]
+
+# sampled_df είναι το 10% του df, διατηρώντας τις αναλογίες των κατηγοριών της στήλης 'label'
+
+
+Dataset 2: Clustering KMeans
+======================
+baseline γρήγορη λύση
+ευαισθητος σητν αρχικη επιλογη κεντρων
+Επιλέγω K με Silhouette Score ( Trial and Error )
+
+
+Dataset 3: Clustrering DBScan
+=============================
+ευελιξία για πιο σύνθετες δομές και προστασία από θόρυβο.
+
+Εντοπίζει περιοχές με πυκνή συγκέντρωση σημείων και δημιουργεί clusters γύρω από αυτές.
+
+Τα σημεία που δεν ανήκουν σε καμία πυκνή περιοχή θεωρούνται θόρυβος (outliers).
+
+eps: μέγιστη απόσταση μεταξύ δύο σημείων για να θεωρηθούν γειτονικά.
+
+min_samples: ο ελάχιστος αριθμός σημείων σε μια περιοχή για να θεωρηθεί πυκνή.
+
+Ξεκινάει από ένα τυχαίο σημείο:
+
+Αν η περιοχή γύρω από το σημείο έχει αρκετά σημεία (≥ min_samples), δημιουργεί cluster.
+
+Προσθέτει όλα τα γειτονικά σημεία στο cluster και συνεχίζει επεκτείνοντας.
+
+Τα σημεία που δεν ανήκουν σε κανένα cluster χαρακτηρίζονται ως θόρυβος.
+
+Πλεονεκτήματα:
+Δεν χρειάζεται να ορίσεις τον αριθμό των clusters πριν.
+
+Εντοπίζει clusters με περίεργα σχήματα.
+
+Αντιμετωπίζει καλά τον θόρυβο και τα outliers.
+
+Μειονεκτήματα:
+Δεν δουλεύει καλά αν η πυκνότητα των clusters διαφέρει πολύ.
+
+Απαιτεί ρύθμιση παραμέτρων (eps και min_samples) που μπορεί να είναι δύσκολη.
+
+Δεν είναι ιδανικός για πολύ μεγάλα datasets χωρίς βελτιστοποιήσεις.
+
