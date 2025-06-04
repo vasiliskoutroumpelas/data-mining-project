@@ -1,2 +1,4 @@
 data.csv
 main.py
+venv/
+csv/compressed_datasets/df_less_cols.csv
